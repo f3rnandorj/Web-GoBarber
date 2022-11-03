@@ -10,6 +10,7 @@
     "react-dom": "16.8.6",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.0",
+    "reactotron-react-js": "^3.3.8",
     "web-vitals": "2.1.4"
   },
   "scripts": {
