@@ -16,7 +16,8 @@
     "react-scripts": "5.0.0",
     "reactotron-react-js": "^3.3.8",
     "styled-components": "^5.3.6",
-    "web-vitals": "2.1.4"
+    "web-vitals": "2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-app-rewired start",
