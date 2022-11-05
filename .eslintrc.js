@@ -32,6 +32,7 @@ module.exports = {
     'no-console': ['error', { allow: ['tron'] }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'default-param-last': 0,
     'react/jsx-no-bind': {
       allowBind: 0,
     },
