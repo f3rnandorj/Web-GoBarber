@@ -28,7 +28,7 @@ export default function Header() {
                 profile.avatar.url ||
                 'http://adorableavatars.com/avatars/50/abott@itg.sh.png'
               }
-              alt="Fernando Henrique"
+              alt="Img-pefil"
             />
           </Profile>
         </aside>
