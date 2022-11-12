@@ -27,7 +27,7 @@ export default function Profile() {
         <hr />
 
         <Input
-          name="password"
+          name="oldPassword"
           type="oldPassword"
           placeholder="Sua senha antiga"
         />
