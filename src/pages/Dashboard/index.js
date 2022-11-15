@@ -7,14 +7,13 @@ import {
   setMinutes,
   setSeconds,
   isBefore,
+  isEqual,
   parseISO,
-  getHours,
 } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import pt from 'date-fns/locale/pt-BR';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import api from '../../services/api';
-
 import { Container, Time } from './styles';
 
 const range = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
@@ -42,7 +41,9 @@ export default function Dashboard() {
         return {
           time: `${hour}:00h`,
           past: isBefore(compareDate, new Date()),
-          appointment: response.data,
+          appointment: response.data.find(a =>
+            isEqual(parseISO(a.date), compareDate),
+          ),
         };
       });
 
@@ -73,26 +74,14 @@ export default function Dashboard() {
       </header>
 
       <ul>
-        {schedule.map(time => {
-          const userAppointments = time.appointment.map(index => {
-            if (`${getHours(parseISO(index.date))}:00h` === time.time) {
-              return index.user.name;
-            }
-            return null;
-          });
-          return (
-            <Time
-              key={time.time}
-              past={time.past}
-              available={!time.appointment}
-            >
-              <strong>{time.time}</strong>
-              <span>
-                {userAppointments.length <= 0 ? '' : userAppointments}
-              </span>
-            </Time>
-          );
-        })}
+        {schedule.map(time => (
+          <Time key={time.time} past={time.past} available={!time.appointment}>
+            <strong>{time.time}</strong>
+            <span>
+              {time.appointment ? time.appointment.user.name : 'Em aberto'}
+            </span>
+          </Time>
+        ))}
       </ul>
     </Container>
   );
