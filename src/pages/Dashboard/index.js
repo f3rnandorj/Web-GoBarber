@@ -7,8 +7,8 @@ import {
   setMinutes,
   setSeconds,
   isBefore,
-  isEqual,
   parseISO,
+  getHours,
 } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import pt from 'date-fns/locale/pt-BR';
@@ -39,14 +39,10 @@ export default function Dashboard() {
       const data = range.map(hour => {
         const checkDate = setSeconds(setMinutes(setHours(date, hour), 0), 0);
         const compareDate = utcToZonedTime(checkDate, timezone);
-        console.tron.log(data);
-
         return {
           time: `${hour}:00h`,
           past: isBefore(compareDate, new Date()),
-          appointment: response.data.find(a =>
-            isEqual(parseISO(a.date), compareDate),
-          ),
+          appointment: response.data,
         };
       });
 
@@ -77,14 +73,26 @@ export default function Dashboard() {
       </header>
 
       <ul>
-        {schedule.map(time => (
-          <Time key={time.time} past={time.past} available={!time.appointment}>
-            <strong>{time.time}</strong>
-            <span>
-              {time.appointment ? time.appointment.user.name : 'Em aberto'}
-            </span>
-          </Time>
-        ))}
+        {schedule.map(time => {
+          const userAppointments = time.appointment.map(index => {
+            if (`${getHours(parseISO(index.date))}:00h` === time.time) {
+              return index.user.name;
+            }
+            return null;
+          });
+          return (
+            <Time
+              key={time.time}
+              past={time.past}
+              available={!time.appointment}
+            >
+              <strong>{time.time}</strong>
+              <span>
+                {userAppointments.length <= 0 ? '' : userAppointments}
+              </span>
+            </Time>
+          );
+        })}
       </ul>
     </Container>
   );
